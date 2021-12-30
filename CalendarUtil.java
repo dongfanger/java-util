@@ -86,7 +86,7 @@ public class CalendarUtil {
 
             map.put("firstDay", firstDay);
             map.put("lastDay", lastDay);
-            map.put("month", Integer.toString(month));
+            map.put("month", String.format("%d-%02d", year, month));
 
             result.add(map);
         }
