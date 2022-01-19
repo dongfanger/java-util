@@ -43,6 +43,9 @@ public class CalendarUtil {
 
     public static Calendar getFirstDayCalendar(String type) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setMinimalDaysInFirstWeek(4);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
         if (type.equals("week")) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         }
@@ -80,6 +83,7 @@ public class CalendarUtil {
             String lastDay = sdf.format(calendar.getTime());
             lastDay += " 23:59:59";
 
+            int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
 
             Map<String, String> map = new HashMap<>();
