@@ -161,7 +161,7 @@ public class AQ100 {
     }
 
     //7按之字形顺序打印二叉树
-    public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+    public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         LinkedList<TreeNode> deque = new LinkedList<>();
         ArrayList res = new ArrayList<>();
         if (pRoot != null) {
@@ -198,6 +198,77 @@ public class AQ100 {
         }
 
         return res;
+    }
+
+    //8求二叉树的层序遍历
+    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        // write code here
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        dfs(root, res, 0);
+        return res;
+    }
+
+    public void dfs(TreeNode root, ArrayList<ArrayList<Integer>> list, int depth) {
+        if (root == null) {
+            return;
+        }
+
+        if (list.size() == depth) {
+            list.add(new ArrayList<>());
+        }
+
+        dfs(root.left, list, depth + 1);
+        list.get(depth).add(root.val);
+        dfs(root.right, list, depth + 1);
+    }
+
+    //9对称的二叉树
+    boolean isSymmetrical(TreeNode pRoot) {
+        return isSame(pRoot, pRoot);
+    }
+
+    public boolean isSame(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+        return root1.val == root2.val &&
+                isSame(root1.left, root2.right) &&
+                isSame(root1.right, root2.left);
+    }
+
+    //10最长回文子串
+    public int getLongestPalindrome (String A) {
+        // write code here
+        int maxLen = 0;
+        int n = A.length();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                String now = A.substring(i, j);
+                if (isHuiWen(now) && now.length() > maxLen) {
+                    maxLen = now.length();
+                }
+            }
+        }
+
+        return maxLen;
+    }
+
+    public boolean isHuiWen(String s) {
+        int len = s.length();
+        for (int i = 0; i < len / 2; i++) {
+            if (s.charAt(i) != s.charAt(len - i - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //冒泡排序
