@@ -30,14 +30,14 @@ public class CalendarUtil {
     }
 
     public static String getFirstDay(String type) {
-        Calendar calendar = getStartDayCalendar(type);
+        Calendar calendar = getFirstDayCalendar(type);
         Date date = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }
 
     public static String getFirstDayTimeMillis(String type) {
-        Calendar calendar = getStartDayCalendar(type);
+        Calendar calendar = getFirstDayCalendar(type);
         return Long.toString(calendar.getTimeInMillis());
     }
 
