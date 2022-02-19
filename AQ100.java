@@ -6,7 +6,7 @@ import java.util.*;
 public class AQ100 {
     //======================简单题开始======================
     //1大数加法
-    public String bigNumberAdd(String s, String t) {
+    public String t1_bigNumberAdd(String s, String t) {
         // write code here
         Stack<Integer> stack = new Stack<>();
         StringBuilder result = new StringBuilder();
@@ -35,7 +35,7 @@ public class AQ100 {
         }
     }
 
-    public ListNode EntryNodeOfLoop(ListNode pHead) {
+    public ListNode t2_entryNodeOfLoop(ListNode pHead) {
         if (pHead == null) return null;
         ListNode slow = pHead;
         ListNode fast = pHead;
@@ -63,7 +63,7 @@ public class AQ100 {
     }
 
     //3判断链表中是否有环
-    public boolean hasCycle(ListNode head) {
+    public boolean t3_hasCycle(ListNode head) {
         ListNode pos = head;
         Set<ListNode> visited = new HashSet<>();
         while (pos != null) {
@@ -90,7 +90,7 @@ public class AQ100 {
 
     int maxSum = Integer.MIN_VALUE;
 
-    public int maxPathSum(TreeNode root) {
+    public int t4_maxPathSum(TreeNode root) {
         // write code here
         maxGain(root);
         return maxSum;
@@ -111,7 +111,7 @@ public class AQ100 {
     }
 
     //5将升序数组转化为平衡二叉搜索树
-    public TreeNode sortedArrayToBST(int[] num) {
+    public TreeNode t5_sortedArrayToBST(int[] num) {
         // write code here
         if (num == null || num.length == 0) {
             return null;
@@ -138,7 +138,7 @@ public class AQ100 {
     }
 
     //6重建二叉树
-    public TreeNode reConstructBinaryTree(int[] pre, int[] vin) {
+    public TreeNode t6_reConstructBinaryTree(int[] pre, int[] vin) {
         return reConstructBinaryTree(pre, 0, pre.length - 1, vin, 0, vin.length - 1);
     }
 
@@ -161,7 +161,7 @@ public class AQ100 {
     }
 
     //7按之字形顺序打印二叉树
-    public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+    public ArrayList<ArrayList<Integer>> t7_print(TreeNode pRoot) {
         LinkedList<TreeNode> deque = new LinkedList<>();
         ArrayList res = new ArrayList<>();
         if (pRoot != null) {
@@ -201,7 +201,7 @@ public class AQ100 {
     }
 
     //8求二叉树的层序遍历
-    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+    public ArrayList<ArrayList<Integer>> t8_levelOrder(TreeNode root) {
         // write code here
         ArrayList<ArrayList<Integer>> res = new ArrayList<>();
         if (root == null) {
@@ -227,7 +227,7 @@ public class AQ100 {
     }
 
     //9对称的二叉树
-    boolean isSymmetrical(TreeNode pRoot) {
+    boolean t9_isSymmetrical(TreeNode pRoot) {
         return isSame(pRoot, pRoot);
     }
 
@@ -244,7 +244,7 @@ public class AQ100 {
     }
 
     //10最长回文子串
-    public int getLongestPalindrome (String A) {
+    public int t10_getLongestPalindrome(String A) {
         // write code here
         int maxLen = 0;
         int n = A.length();
@@ -261,6 +261,72 @@ public class AQ100 {
         return maxLen;
     }
 
+    //11顺时针旋转矩阵
+    public int[][] t11_rotateMatrix(int[][] mat, int n) {
+        // write code here
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int tmp = mat[i][j];
+                mat[i][j] = mat[j][i];
+                mat[j][i] = tmp;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int tmp = mat[i][n-1-j];
+                mat[i][n-1-j] = mat[i][j];
+                mat[i][j] = tmp;
+            }
+        }
+
+        return mat;
+    }
+
+    //12连续子数组的最大和
+    public int t12_findGreatestSumOfSubArray(int[] array) {
+        int res = array[0];
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            max = Math.max(max + array[i], array[i]);
+            res = Math.max(max, res);
+        }
+        return res;
+    }
+
+    //13合并两个有序的数组
+    public void t13_merge(int A[], int m, int B[], int n) {
+        int i = 0, j = 0, p = 0;
+        int[] c = new int[m + n];
+        while (i < m && j < n) {
+            c[p++] = A[i] <= B[j] ? A[i++] : B[j++];
+        }
+        while (i < m) {
+            c[p++] = A[i++];
+        }
+        while (j < n) {
+            c[p++] = B[j++];
+        }
+        for (int x = 0; x < p; x++) {
+            A[x] = c[x];
+        }
+    }
+
+    //14删除有序链表中重复的元素-I
+    public ListNode t14_deleteDuplicates (ListNode head) {
+        // write code here
+        ListNode cur = head;
+        while (cur != null) {
+            while (cur.next != null && cur.val == cur.next.val) {
+                cur.next = cur.next.next;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
+    //15删除有序链表中重复的元素-II
+
     public boolean isHuiWen(String s) {
         int len = s.length();
         for (int i = 0; i < len / 2; i++) {
@@ -272,7 +338,7 @@ public class AQ100 {
     }
 
     //冒泡排序
-    public int[] bubbleSort(int[] nums) {
+    public int[] t81_bubbleSort(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length - i - 1; j++) {
                 if (nums[j] > nums[j + 1]) {
@@ -286,7 +352,7 @@ public class AQ100 {
     }
 
     //两数之和
-    public int[] twoSum(int[] nums, int target) {
+    public int[] t82_twoSum(int[] nums, int target) {
         if (Objects.isNull(nums) || nums.length == 0) {
             return null;
         }
@@ -302,7 +368,7 @@ public class AQ100 {
     }
 
     //回文数
-    public boolean isPalindrome(int x) {
+    public boolean t83_isPalindrome(int x) {
         if (x < 0 || (x % 10 == 0 && x != 0)) {
             return false;
         }
