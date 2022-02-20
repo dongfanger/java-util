@@ -2,11 +2,11 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class AQ100Test {
+public class AQ80Test {
     @Test
     public void bubbleSortTest() {
-        AQ100 aq = new AQ100();
+        AQ80 aq = new AQ80();
         int[] data = new int[]{3, 1, 2, 5};
-        System.out.println(Arrays.toString(aq.t81_bubbleSort(data)));
+        System.out.println(Arrays.toString(aq.bubbleSort(data)));
     }
 }

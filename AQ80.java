@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * 100道算法题 Algorithm Question
  */
-public class AQ100 {
+public class AQ80 {
     //======================简单题开始======================
     //1大数加法
     public String t1_bigNumberAdd(String s, String t) {
@@ -261,6 +261,16 @@ public class AQ100 {
         return maxLen;
     }
 
+    public boolean isHuiWen(String s) {
+        int len = s.length();
+        for (int i = 0; i < len / 2; i++) {
+            if (s.charAt(i) != s.charAt(len - i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //11顺时针旋转矩阵
     public int[][] t11_rotateMatrix(int[][] mat, int n) {
         // write code here
@@ -274,8 +284,8 @@ public class AQ100 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n / 2; j++) {
-                int tmp = mat[i][n-1-j];
-                mat[i][n-1-j] = mat[i][j];
+                int tmp = mat[i][n - 1 - j];
+                mat[i][n - 1 - j] = mat[i][j];
                 mat[i][j] = tmp;
             }
         }
@@ -313,7 +323,7 @@ public class AQ100 {
     }
 
     //14删除有序链表中重复的元素-I
-    public ListNode t14_deleteDuplicates (ListNode head) {
+    public ListNode t14_deleteDuplicates(ListNode head) {
         // write code here
         ListNode cur = head;
         while (cur != null) {
@@ -326,19 +336,125 @@ public class AQ100 {
     }
 
     //15删除有序链表中重复的元素-II
+    public ListNode t15_deleteDuplicates(ListNode head) {
+        // write code here
+        ListNode node = new ListNode(-1);
+        node.next = head;
+        ListNode p = node;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            if (cur.val != cur.next.val) {
+                p = cur;
+            } else {
+                while (cur.next != null && cur.val == cur.next.val) {
+                    cur = cur.next;
 
-    public boolean isHuiWen(String s) {
-        int len = s.length();
-        for (int i = 0; i < len / 2; i++) {
-            if (s.charAt(i) != s.charAt(len - i - 1)) {
-                return false;
+                }
+                p.next = cur.next;
+
             }
+            cur = cur.next;
         }
-        return true;
+        return node.next;
     }
 
+    //16括号生成
+    public ArrayList<String> t16_generateParenthesis (int n) {
+        // write code here
+        ArrayList<String> result = new ArrayList<>(10);
+        backtrack("", 0, 0, n, result);
+        return result;
+    }
+
+    private void backtrack(String string, int open, int close, int n, List<String> result) {
+        if (string.length() == n << 1) {
+            result.add(string);
+            return;
+        }
+        if (open < n) {
+            backtrack(string + "(", open + 1, close, n ,result);
+        }
+        if (close < open) {
+            backtrack(string + ")", open, close + 1, n, result);
+        }
+    }
+
+    //17集合的所有子集(一)
+    ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> t17_subsets(int[] nums) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int j = 0; j <= nums.length; j++) {
+            backtracking(nums, j, 0, list);
+        }
+        return result;
+    }
+    public void backtracking(int[] nums, int k, int start, ArrayList<Integer> list) {
+        if (k < 0) {
+            return;
+        } else if (k == 0) {
+            result.add(new ArrayList(list));
+        } else {
+            for (int i = start; i < nums.length; i++) {
+                list.add(nums[i]);
+                backtracking(nums, k - 1, i + 1, list);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+
+    //18最小覆盖子串
+    public String t18_minWindow (String S, String T) {
+        // write code here
+        int[] map = new int[128];
+        for (int i = 0; i < T.length(); i++) {
+            map[T.charAt(i)]++;
+        }
+
+        int begin = 0, end = 0, d = Integer.MAX_VALUE, counter = T.length(), head = 0;
+        while (end < S.length()) {
+            if (map[S.charAt(end++)]-- > 0) {
+                counter--;
+            }
+            while(counter == 0) {
+                if (end - begin < d) {
+                    d = end - (head = begin);
+                }
+                if (map[S.charAt(begin++)]++ == 0) {
+                    counter++;
+                }
+            }
+        }
+        return d == Integer.MAX_VALUE ? "" : S.substring(head, head + d);
+    }
+
+    //19缺失的第一个正整数
+    public int t19_minNumberDisappeared (int[] nums) {
+        // write code here
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] <= 0) {
+                nums[i] = nums.length + 1;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int x = Math.abs(nums[i]);
+            if (x <= nums.length) {
+                nums[x - 1] = (-1) * Math.abs(nums[x - 1]);
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return nums.length + 1;
+    }
+
+    //20第一个只出现一次的字符
+
+
     //冒泡排序
-    public int[] t81_bubbleSort(int[] nums) {
+    public int[] bubbleSort(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < nums.length - i - 1; j++) {
                 if (nums[j] > nums[j + 1]) {
@@ -351,34 +467,6 @@ public class AQ100 {
         return nums;
     }
 
-    //两数之和
-    public int[] t82_twoSum(int[] nums, int target) {
-        if (Objects.isNull(nums) || nums.length == 0) {
-            return null;
-        }
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (map.containsKey(complement)) {
-                return new int[]{map.get(complement), i};
-            }
-            map.put(nums[i], i);
-        }
-        return null;
-    }
-
-    //回文数
-    public boolean t83_isPalindrome(int x) {
-        if (x < 0 || (x % 10 == 0 && x != 0)) {
-            return false;
-        }
-        int revertedNumber = 0;
-        while (x > revertedNumber) {
-            revertedNumber = revertedNumber * 10 + x % 10;
-            x /= 10;
-        }
-        return x == revertedNumber || x == revertedNumber / 10;
-    }
 
     //======================简单题结束======================
 

@@ -1,0 +1,26 @@
+import java.util.*;
+
+public class Solution {
+    ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> subsets(int[] nums) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int j = 0; j < nums.length; j++) {
+            backtracking(nums, j, 0, list);
+        }
+        return result;
+    }
+    public void backtracking(int[] nums, int k, int start, ArrayList<Integer> list) {
+        if (k < 0) {
+            return;
+        } else if (k == 0) {
+            result.add(new ArrayList(list));
+        } else {
+            for (int i = start; i < nums.length; i++) {
+                list.add(nums[i]);
+                backtracking(nums, k - 1, i + 1, list);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+}
