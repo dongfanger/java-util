@@ -473,10 +473,10 @@ public class AQ80 {
             return list1;
         }
         if (list1.val <= list2.val) {
-            list1.next = Merge(list1.next, list2);
+            list1.next = t21_Merge(list1.next, list2);
             return list1;
         } else {
-            list2.next = Merge(list1, list2.next);
+            list2.next = t21_Merge(list1, list2.next);
             return list2;
         }
     }
