@@ -451,6 +451,66 @@ public class AQ80 {
     }
 
     //20第一个只出现一次的字符
+    public int t20_FirstNotRepeatingChar(String str) {
+        int[] dp = new int[123];
+        for (int i = 0; i < str.length(); i++) {
+            dp[str.charAt(i)]++;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (dp[str.charAt(i)] == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //21合并两个排序的链表
+    public ListNode t21_Merge(ListNode list1,ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        if (list1.val <= list2.val) {
+            list1.next = Merge(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = Merge(list1, list2.next);
+            return list2;
+        }
+    }
+
+    //22编辑距离(二)
+    public int t22_minEditCost (String str1, String str2, int ic, int dc, int rc) {
+        // write code here
+        if (str1.length() == 0) {
+            return str2.length() * ic;
+        }
+        if (str2.length() == 0) {
+            return str1.length() * dc;
+        }
+        int n1 = str1.length(), n2 = str2.length();
+        int[][] dp = new int[n1 + 1][n2 + 1];
+        for (int i = 0; i <= n1; i++) {
+            dp[i][0] = i * dc;
+        }
+        for (int i = 0; i <= n2; i++) {
+            dp[0][i] = i * ic;
+        }
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] =  Math.min(dp[i-1][j] + dc, Math.min(dp[i][j-1] + ic, dp[i-1][j-1] + rc));
+                }
+            }
+        }
+        return dp[n1][n2];
+    }
+
+    //23在两个长度相等的排序数组中找到上中位数
 
 
     //冒泡排序
