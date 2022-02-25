@@ -2030,11 +2030,12 @@ public class AQ80 {
         }
         return true;
     }
+
     //80数组中只出现一次的数（其它数出现k次）
-    public int t80_foundOnceNumber (int[] arr, int k) {
+    public int t80_foundOnceNumber(int[] arr, int k) {
         // write code here
         HashMap<Integer, Boolean> map = new HashMap<>();
-        for (int num: arr) {
+        for (int num : arr) {
             if (map.containsKey(num)) {
                 map.put(num, true);
             } else {
